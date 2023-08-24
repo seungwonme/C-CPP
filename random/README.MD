@@ -1,0 +1,5 @@
+- man 3 time
+- man localtime
+- man 3 rand
+- [time ref](https://coding-factory.tistory.com/668)
+- [rand ref](https://blockdmask.tistory.com/308?category=249597)

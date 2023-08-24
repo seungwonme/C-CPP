@@ -1,0 +1,1 @@
+- [ref](https://for-survive.tistory.com/7)

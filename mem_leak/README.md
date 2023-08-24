@@ -1,0 +1,5 @@
+- man atexit
+- man system
+- [valgrind](https://github.com/LouisBrunner/valgrind-macos)라는 도구도 있지만 내 작업 환경에서는 사용이 불가능하다
+- [ref](https://velog.io/@taelee/C-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%88%84%EC%88%98-%EA%B2%80%EC%82%AC%ED%95%98%EA%B8%B0)
+- [gcc -fsanitize](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)
