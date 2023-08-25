@@ -9,3 +9,5 @@ int	main(void)
 	printf("%c", "A");
 	return (0);
 }
+
+// https://for-survive.tistory.com/7
