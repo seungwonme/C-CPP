@@ -1,16 +1,15 @@
 #include <stdio.h>
 
-int main(void)
+int	main(void)
 {
-	// little endian, big endian
-	int	a;
-	int	*p;
-
-	p = &a;
-	printf("0x%p\n", &a);
-	a = 0x00112233;
-	printf("0x%08x\n", a);
-	a = 0x33221100;
-	printf("0x%08x\n", a);
+	int	a[10];
+	for (size_t i = 0; i < 10; i++)
+		a[i] = 0x00112233 + i;
+	for (size_t i = 0; i < 10; i++)
+		printf("%p: %08x\n", &a[i], a[i]);
+	for (size_t i = 0; i < 10; i++)
+		a[i] = 0x33221100 + i;
+	for (size_t i = 0; i < 10; i++)
+		printf("%p: %08x\n", &a[i], a[i]);
 	return (0);
 }

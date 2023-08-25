@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "cppbuild",
+			"type": "shell",
 			"label": "LLDB",								// launch.json의 preLaunchTask와 일치
 			"command": "/usr/bin/gcc",
 			"args": [
@@ -20,7 +20,6 @@
 			"options": {
 				"cwd": "${fileDirname}"
 			},
-			"problemMatcher": ["$gcc"],						// 컴파일러 오류 및 경고 메시지를 처리하는 방법을 지정
 			"group": "build",
 			"detail": "compiler: /usr/bin/gcc"
 		}
