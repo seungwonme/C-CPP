@@ -15,7 +15,7 @@ vscode의 default debugger는 gdb이기 때문에 lldb extension을 다운
 
 - 실행 관리:
 	- run 또는 r: 프로그램을 실행합니다.
-	- continue 또는 c: 중단점을 무시하고 실행을 계속합니다.
+	- continue 또는 c: 현재 중단점을 무시하고 실행을 계속합니다.
 	- step [count] 또는 s [count]: 다음 명령어로 단계별 실행을 수행합니다.
 
 - 변수 및 스코프 관리:
