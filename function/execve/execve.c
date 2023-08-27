@@ -2,11 +2,11 @@
 
 int	main(void)
 {
-	// char	*av[] = {"ls", "-al", NULL};
-	// execve("/bin/ls", av, NULL);
+	char	*av[] = {"/bin/ls", "-l", "-a", "-R", NULL};
+	execve(av[0], av, NULL);
 
-	char	*av[] = {"./a.out", NULL};
-	execve("print", av, NULL);
+	// char	*av[] = {"./a.out", NULL};
+	// execve("print", av, NULL);
 
 	return (0);
 }
