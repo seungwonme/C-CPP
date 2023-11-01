@@ -6,7 +6,7 @@ int	main(void)
 {
 	pid_t	pid;
 
-	for (size_t i = 0; i < 5380; i++)
+	for (size_t i = 0; i < 2304; i++)
 	{
 		pid = fork();
 		if (pid == 0)
