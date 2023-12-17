@@ -5,7 +5,7 @@ int	main(void)
 {
 	int	*ptr;
 
-	ptr = malloc(200000000000000); // 200조
+	ptr = malloc(3000000000); // 30억 byte => 약 2.8Gb
 	if (!ptr)
 	{
 		perror("malloc");
