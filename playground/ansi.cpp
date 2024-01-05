@@ -1,3 +1,5 @@
+// compile: clang++ ansi.cpp -o ansi
+
 #include <iostream>
 using namespace std;
 
@@ -25,6 +27,28 @@ int	main(void)
 	cout << "\033[1;37m\\033[1;37m White\033[0m\n";
 	cout << "\033[1;39m\\033[1;39m Default\033[0m\n\n";
 
+	cout << "Italic\n";
+	cout << "\033[3;30m\\033[3;30m Black\033[0m\n";
+	cout << "\033[3;31m\\033[3;31m Red\033[0m\n";
+	cout << "\033[3;32m\\033[3;32m Green\033[0m\n";
+	cout << "\033[3;33m\\033[3;33m Yellow\033[0m\n";
+	cout << "\033[3;34m\\033[3;34m Blue\033[0m\n";
+	cout << "\033[3;35m\\033[3;35m Purple\033[0m\n";
+	cout << "\033[3;36m\\033[3;36m Cyan\033[0m\n";
+	cout << "\033[3;37m\\033[3;37m White\033[0m\n";
+	cout << "\033[3;39m\\033[3;39m Default\033[0m\n\n";
+
+	cout << "Bold Italic\n";
+	cout << "\033[3;30m\033[1;30m\\033[3;30m\\033[1;30m Black\033[0m\n";
+	cout << "\033[3;31m\033[1;31m\\033[3;31m\\033[1;31m Red\033[0m\n";
+	cout << "\033[3;32m\033[1;32m\\033[3;32m\\033[1;32m Green\033[0m\n";
+	cout << "\033[3;33m\033[1;33m\\033[3;33m\\033[1;33m Yellow\033[0m\n";
+	cout << "\033[3;34m\033[1;34m\\033[3;34m\\033[1;34m Blue\033[0m\n";
+	cout << "\033[3;35m\033[1;35m\\033[3;35m\\033[1;35m Purple\033[0m\n";
+	cout << "\033[3;36m\033[1;36m\\033[3;36m\\033[1;36m Cyan\033[0m\n";
+	cout << "\033[3;37m\033[1;37m\\033[3;37m\\033[1;37m White\033[0m\n";
+	cout << "\033[3;39m\033[1;39m\\033[3;39m\\033[1;39m Default\033[0m\n\n";
+
 	cout << "Underline\n";
 	cout << "\033[4;30m\\033[4;30m Black\033[0m\n";
 	cout << "\033[4;31m\\033[4;31m Red\033[0m\n";
@@ -35,6 +59,17 @@ int	main(void)
 	cout << "\033[4;36m\\033[4;36m Cyan\033[0m\n";
 	cout << "\033[4;37m\\033[4;37m White\033[0m\n";
 	cout << "\033[4;39m\\033[4;39m Default\033[0m\n\n";
+
+	cout << "Strikethrough\n";
+	cout << "\033[9;30m\\033[9;30m Black\033[0m\n";
+	cout << "\033[9;31m\\033[9;31m Red\033[0m\n";
+	cout << "\033[9;32m\\033[9;32m Green\033[0m\n";
+	cout << "\033[9;33m\\033[9;33m Yellow\033[0m\n";
+	cout << "\033[9;34m\\033[9;34m Blue\033[0m\n";
+	cout << "\033[9;35m\\033[9;35m Purple\033[0m\n";
+	cout << "\033[9;36m\\033[9;36m Cyan\033[0m\n";
+	cout << "\033[9;37m\\033[9;37m White\033[0m\n";
+	cout << "\033[9;39m\\033[9;39m Default\033[0m\n\n";
 
 	cout << "Background\n";
 	cout << "\033[40m\\033[40m Black\033[0m\n";
