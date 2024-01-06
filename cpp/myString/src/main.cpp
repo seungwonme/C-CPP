@@ -14,7 +14,7 @@ int	main(void)
 {
 	atexit(leak);
 	MyString str1("very very very long string");
-	str1.Reserve(30);
+	/* str1.Reserve(30);
 	std::cout << "String length : " << str1.GetLength() << std::endl;
 	std::cout << "Capacity : " << str1.GetCapacity() << std::endl;
 	str1.Println();
@@ -65,6 +65,11 @@ int	main(void)
 	std::cout << "String length : " << str2.length() << std::endl;
 
 	std::cout << str2 << std::endl;
-	str1.Println();
+	str1.Println(); */
+
+	// Assignment operator가 없었다면 Shallow copy => 소멸자 함수에서 이중 delete 발생
+	MyString a;
+	a = str1;
+	a.Println();
 	return 0;
 }

@@ -46,8 +46,40 @@ MyString::~MyString()
 	delete[] mStringContent;
 }
 
-/* Methods */
+/* Assignment operator */
 
+void MyString::operator=(const MyString& str)
+{
+	this->SetContent(str);
+}
+
+/* Methods */
+void MyString::SetContent(const MyString& str)
+{
+	if (str.mStringLength > mMemoryCapacity)
+	{
+		delete[] mStringContent;
+		mStringContent = new char[str.mStringLength];
+		mMemoryCapacity = mStringLength;
+	}
+	mStringLength = str.mStringLength;
+	for (size_t i = 0; i < mStringLength; i++)
+		mStringContent[i] = str.mStringContent[i];
+}
+void MyString::SetContent(const char* str)
+{
+	size_t newLen = MyStrlen(str);
+
+	if (newLen > mMemoryCapacity)
+	{
+		delete[] mStringContent;
+		mStringContent = new char[newLen];
+		mMemoryCapacity = mStringLength;
+	}
+	mStringLength = newLen;
+	for (size_t i = 0; i < mStringLength; i++)
+		mStringContent[i] = str[i];
+}
 const char* MyString::GetContent(void) const
 {
 	return mStringContent;
@@ -71,35 +103,18 @@ void MyString::Println(void) const
 		std::cout << mStringContent[i];
 	std::cout << std::endl;
 }
+// '=' 과 동일한 역할의 함수
 const MyString& MyString::Assign(const MyString& str)
 {
-	if (str.mStringLength > mMemoryCapacity)
-	{
-		delete[] mStringContent;
-		mStringContent = new char[str.mStringLength];
-		mMemoryCapacity = mStringLength;
-	}
-	mStringLength = str.mStringLength;
-	for (size_t i = 0; i < mStringLength; i++)
-		mStringContent[i] = str.mStringContent[i];
+	this->SetContent(str);
 	return *this;
 }
 const MyString& MyString::Assign(const char* str)
 {
-	size_t newLen;
-
-	newLen = MyStrlen(str);
-	if (newLen > mMemoryCapacity)
-	{
-		delete[] mStringContent;
-		mStringContent = new char[newLen];
-		mMemoryCapacity = newLen;
-	}
-	mStringLength = newLen;
-	for (size_t i = 0; i < mStringLength; i++)
-		mStringContent[i] = str[i];
+	this->SetContent(str);
 	return *this;
 }
+// 미리 메모리를 할당하는 함수
 void MyString::Reserve(size_t size)
 {
 	size_t i;
@@ -116,6 +131,7 @@ void MyString::Reserve(size_t size)
 	}
 	mMemoryCapacity = size;
 }
+// 해당 인덱스의 문자를 반환하는 함수
 char MyString::At(size_t i) const
 {
 	if (i >= mStringLength)
