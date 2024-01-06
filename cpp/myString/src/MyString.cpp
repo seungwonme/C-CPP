@@ -1,14 +1,9 @@
+#include <iostream>
 #include "MyString.hpp"
 
-size_t MyStrlen(const char* s)
-{
-	size_t len;
+static size_t MyStrlen(const char* s);
 
-	len = 0;
-	while (s[len])
-		++len;
-	return len;
-}
+/* Constructor */
 
 MyString::MyString(char c)
 {
@@ -17,7 +12,6 @@ MyString::MyString(char c)
 	mMemoryCapacity = 1;
 	mStringLength = 1;
 }
-// 문자열로 부터 생성
 MyString::MyString(const char* str)
 {
 	mStringLength = MyStrlen(str);
@@ -27,7 +21,6 @@ MyString::MyString(const char* str)
 	for (size_t i = 0; i < mStringLength; i++)
 		mStringContent[i] = str[i];
 }
-// 복사 생성자
 MyString::MyString(const MyString& str)
 {
 	mStringLength = str.mStringLength;
@@ -37,10 +30,16 @@ MyString::MyString(const MyString& str)
 	for (size_t i = 0; i < mStringLength; i++)
 		mStringContent[i] = str.mStringContent[i];
 }
+
+/* Destructor */
+
 MyString::~MyString()
 {
 	delete[] mStringContent;
 }
+
+/* Methods */
+
 size_t MyString::GetLength(void) const
 {
 	return mStringLength;
@@ -60,7 +59,7 @@ void MyString::Println(void) const
 		std::cout << mStringContent[i];
 	std::cout << std::endl;
 }
-MyString& MyString::Assign(const MyString& str)
+const MyString& MyString::Assign(const MyString& str)
 {
 	if (str.mStringLength > mMemoryCapacity)
 	{
@@ -73,7 +72,7 @@ MyString& MyString::Assign(const MyString& str)
 		mStringContent[i] = str.mStringContent[i];
 	return *this;
 }
-MyString& MyString::Assign(const char* str)
+const MyString& MyString::Assign(const char* str)
 {
 	size_t newLen;
 
@@ -105,7 +104,7 @@ void MyString::Reserve(size_t size)
 	}
 	mMemoryCapacity = size;
 }
-char MyString::At(size_t i)
+char MyString::At(size_t i) const
 {
 	if (i >= mStringLength)
 		return '\0';
@@ -114,73 +113,122 @@ char MyString::At(size_t i)
 }
 MyString& MyString::Insert(size_t loc, const MyString& str)
 {
-	char* newContent;
-	size_t newLen;
-	size_t i;
+	char* newContent = mStringContent;
+	size_t newLen = mStringLength + str.mStringLength;
+	bool bRealloc = newLen > mMemoryCapacity;
 
-	newLen = mStringLength + str.mStringLength;
-	newContent = new char[mStringLength];
-	for (i = 0; i < loc && i < mStringLength; i++)
+	if (loc > mStringLength)
+	{
+		loc = mStringLength;
+	}
+	if (bRealloc)
+	{
+		newContent = new char[newLen];
+		mMemoryCapacity = newLen;
+	}
+	for (size_t i = 0; i < loc; i++)
+	{
 		newContent[i] = mStringContent[i];
-	for (size_t j = 0; j < str.mStringLength; j++)
-	{
-		newContent[i] = str.mStringContent[j];
-		++i;
 	}
-	for (size_t j = loc; i < newLen; i++)
+	for (size_t i = newLen - 1; i >= loc + str.mStringLength; i--)
 	{
-		newContent[i] = mStringContent[j];
-		++j;
+		newContent[i] = mStringContent[i - str.mStringLength];
 	}
-	delete[] mStringContent;
-	mStringContent = newContent;
+	for (size_t i = 0; i < str.mStringLength; i++)
+	{
+		newContent[loc + i] = str.mStringContent[i];
+	}
+
+	if (bRealloc)
+	{
+		delete[] mStringContent;
+		mStringContent = newContent;
+	}
 	mStringLength = newLen;
+
 	return *this;
 }
 MyString& MyString::Insert(size_t loc, const char* str)
 {
-	char* newContent;
-	size_t newLen;
-	size_t i;
+	char* newContent = mStringContent;
+	size_t insertLen = MyStrlen(str);
+	size_t newLen = mStringLength + insertLen;
+	bool bRealloc = newLen > mMemoryCapacity;
 
-	newLen = mStringLength + MyStrlen(str);
-	newContent = new char[mStringLength];
-	for (i = 0; i < loc && i < mStringLength; i++)
+	if (loc > mStringLength)
+	{
+		loc = mStringLength;
+	}
+	if (bRealloc)
+	{
+		newContent = new char[newLen];
+		mMemoryCapacity = newLen;
+	}
+	for (size_t i = 0; i < loc; i++)
+	{
 		newContent[i] = mStringContent[i];
-	for (size_t j = 0; j < MyStrlen(str); j++)
-	{
-		newContent[i] = str[j];
-		++i;
 	}
-	for (size_t j = loc; i < newLen; i++)
+	for (size_t i = newLen - 1; i >= loc + insertLen; i--)
 	{
-		newContent[i] = mStringContent[j];
-		++j;
+		newContent[i] = mStringContent[i - insertLen];
 	}
-	delete[] mStringContent;
-	mStringContent = newContent;
+	for (size_t i = 0; i < insertLen; i++)
+	{
+		newContent[loc + i] = str[i];
+	}
+
+	if (bRealloc)
+	{
+		delete[] mStringContent;
+		mStringContent = newContent;
+	}
 	mStringLength = newLen;
+
 	return *this;
 }
 MyString& MyString::Insert(size_t loc, char c)
 {
-	char* newContent;
-	size_t newLen;
-	size_t i;
+	char* newContent = mStringContent;
+	size_t newLen = mStringLength + 1;
+	bool bRealloc = newLen > mMemoryCapacity;
 
-	newLen = mStringLength + 1;
-	newContent = new char[mStringLength];
-	for (i = 0; i < loc && i < mStringLength; i++)
-		newContent[i] = mStringContent[i];
-	newContent[i] = c;
-	++i;
-	for (size_t j = loc; i < newLen; i++)
+	if (loc > mStringLength)
 	{
-		newContent[i] = mStringContent[j];
-		++j;
+		loc = mStringLength;
 	}
-	delete[] mStringContent;
-	mStringContent = newContent;
+	if (bRealloc)
+	{
+		newContent = new char[newLen];
+		mMemoryCapacity = newLen;
+	}
+	for (size_t i = 0; i < loc; i++)
+	{
+		newContent[i] = mStringContent[i];
+	}
+	for (size_t i = newLen - 1; i >= loc + 1; i--)
+	{
+		newContent[i] = mStringContent[i - 1];
+	}
+	newContent[loc] = c;
+
+	if (bRealloc)
+	{
+		delete[] mStringContent;
+		mStringContent = newContent;
+	}
 	mStringLength = newLen;
+
 	return *this;
+}
+
+/* Static functions */
+
+static size_t MyStrlen(const char* s)
+{
+	size_t len;
+
+	len = 0;
+	while (s[len])
+		++len;
+	return len;
 }
