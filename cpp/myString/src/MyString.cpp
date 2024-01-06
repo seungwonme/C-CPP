@@ -12,31 +12,34 @@ MyString::MyString(void)
 	mMemoryCapacity = 1;
 	mStringLength = 1;
 }
+// Conversion Constructor
 MyString::MyString(char c)
 {
-	mStringContent = new char[1];
+	mStringContent = new char[2];
 	mStringContent[0] = c;
-	mMemoryCapacity = 1;
-	mStringLength = 1;
+	mMemoryCapacity = 2;
+	mStringLength = 2;
 }
 MyString::MyString(const char* str)
 {
 	mStringLength = MyStrlen(str);
-	mStringContent = new char[mStringLength];
+	mStringContent = new char[mStringLength + 1];
 	mMemoryCapacity = mStringLength;
 
 	for (size_t i = 0; i < mStringLength; i++)
 		mStringContent[i] = str[i];
+	mStringContent[mStringLength] = '\0';
 }
 // Copy Constructor
 MyString::MyString(const MyString& str)
 {
 	mStringLength = str.mStringLength;
-	mStringContent = new char[mStringLength];
+	mStringContent = new char[mStringLength + 1];
 	mMemoryCapacity = mStringLength;
 
 	for (size_t i = 0; i < mStringLength; i++)
 		mStringContent[i] = str.mStringContent[i];
+	mStringContent[mStringLength] = '\0';
 }
 
 /* Destructor */
@@ -53,32 +56,39 @@ void MyString::operator=(const MyString& str)
 	this->SetContent(str);
 }
 
+MyString::operator const char* () const
+{
+	return mStringContent;
+}
+
 /* Methods */
 void MyString::SetContent(const MyString& str)
 {
-	if (str.mStringLength > mMemoryCapacity)
+	if (str.mStringLength >= mMemoryCapacity)
 	{
 		delete[] mStringContent;
-		mStringContent = new char[str.mStringLength];
+		mStringContent = new char[str.mStringLength + 1];
 		mMemoryCapacity = mStringLength;
 	}
 	mStringLength = str.mStringLength;
 	for (size_t i = 0; i < mStringLength; i++)
 		mStringContent[i] = str.mStringContent[i];
+	mStringContent[str.mStringLength] = '\0';
 }
 void MyString::SetContent(const char* str)
 {
 	size_t newLen = MyStrlen(str);
 
-	if (newLen > mMemoryCapacity)
+	if (newLen >= mMemoryCapacity)
 	{
 		delete[] mStringContent;
-		mStringContent = new char[newLen];
+		mStringContent = new char[newLen + 1];
 		mMemoryCapacity = mStringLength;
 	}
 	mStringLength = newLen;
 	for (size_t i = 0; i < mStringLength; i++)
 		mStringContent[i] = str[i];
+	mStringContent[newLen] = '\0';
 }
 const char* MyString::GetContent(void) const
 {
@@ -91,17 +101,6 @@ size_t MyString::GetLength(void) const
 size_t MyString::GetCapacity(void) const
 {
 	return mMemoryCapacity;
-}
-void MyString::Print(void) const
-{
-	for (size_t i = 0; i < mStringLength; i++)
-		std::cout << mStringContent[i];
-}
-void MyString::Println(void) const
-{
-	for (size_t i = 0; i < mStringLength; i++)
-		std::cout << mStringContent[i];
-	std::cout << std::endl;
 }
 // '=' 과 동일한 역할의 함수
 const MyString& MyString::Assign(const MyString& str)
@@ -120,15 +119,18 @@ void MyString::Reserve(size_t size)
 	size_t i;
 	char* newContent;
 
-	newContent = new char[size];
-	if (mMemoryCapacity > 0)
+	if (mMemoryCapacity >= size)
 	{
-		for (i = 0; i < mStringLength && i < size; i++)
-			newContent[i] = mStringContent[i];
-		delete[] mStringContent;
-		mStringContent = newContent;
-		mStringLength = i;
+		return ;
 	}
+	newContent = new char[size];
+	for (i = 0; i < mStringLength && i < size; i++)
+	{
+		newContent[i] = mStringContent[i];
+	}
+	newContent[mStringLength] = '\0';
+	delete[] mStringContent;
+	mStringContent = newContent;
 	mMemoryCapacity = size;
 }
 // 해당 인덱스의 문자를 반환하는 함수
@@ -151,7 +153,7 @@ MyString& MyString::Insert(size_t loc, const MyString& str)
 	}
 	if (bRealloc)
 	{
-		newContent = new char[newLen];
+		newContent = new char[newLen + 1];
 		mMemoryCapacity = newLen;
 	}
 	for (size_t i = 0; i < loc; i++)
@@ -166,6 +168,7 @@ MyString& MyString::Insert(size_t loc, const MyString& str)
 	{
 		newContent[loc + i] = str.mStringContent[i];
 	}
+	newContent[newLen] = '\0';
 
 	if (bRealloc)
 	{
@@ -189,7 +192,7 @@ MyString& MyString::Insert(size_t loc, const char* str)
 	}
 	if (bRealloc)
 	{
-		newContent = new char[newLen];
+		newContent = new char[newLen + 1];
 		mMemoryCapacity = newLen;
 	}
 	for (size_t i = 0; i < loc; i++)
@@ -204,6 +207,7 @@ MyString& MyString::Insert(size_t loc, const char* str)
 	{
 		newContent[loc + i] = str[i];
 	}
+	newContent[newLen] = '\0';
 
 	if (bRealloc)
 	{
@@ -226,7 +230,7 @@ MyString& MyString::Insert(size_t loc, char c)
 	}
 	if (bRealloc)
 	{
-		newContent = new char[newLen];
+		newContent = new char[newLen + 1];
 		mMemoryCapacity = newLen;
 	}
 	for (size_t i = 0; i < loc; i++)
@@ -238,6 +242,7 @@ MyString& MyString::Insert(size_t loc, char c)
 		newContent[i] = mStringContent[i - 1];
 	}
 	newContent[loc] = c;
+	newContent[newLen] = '\0';
 
 	if (bRealloc)
 	{

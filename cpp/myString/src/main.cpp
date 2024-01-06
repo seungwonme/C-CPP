@@ -70,6 +70,9 @@ int	main(void)
 	// Assignment operator가 없었다면 Shallow copy => 소멸자 함수에서 이중 delete 발생
 	MyString a;
 	a = str1;
-	a.Println();
+	std::cout << a << '\n';
+	a.Reserve(30);
+	a.SetContent("dasd");
+	std::cout << a << '\n';
 	return 0;
 }
