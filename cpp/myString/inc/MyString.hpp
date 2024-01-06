@@ -3,15 +3,17 @@
 
 class MyString {
 private:
-	char* mStringContent;		// 문자열 데이터를 가리키는 포인터
-	size_t mStringLength;		// 문자열 길이
+	char* mStringContent;	// 문자열 데이터를 가리키는 포인터
+	size_t mStringLength;	// 문자열 길이
 	size_t mMemoryCapacity;	// mStringContent에 할당된 메모리
 public:
+	MyString(void);
 	MyString(char c);
 	MyString(const char* str);
 	MyString(const MyString& str); // 복사 생성자
 	~MyString();
 
+	const char*		GetContent(void) const;
 	size_t			GetLength(void) const;
 	size_t			GetCapacity(void) const;
 	void			Print(void) const;

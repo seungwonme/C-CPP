@@ -5,6 +5,13 @@ static size_t MyStrlen(const char* s);
 
 /* Constructor */
 
+MyString::MyString(void)
+{
+	mStringContent = new char[1];
+	mStringContent[0] = '\0';
+	mMemoryCapacity = 1;
+	mStringLength = 1;
+}
 MyString::MyString(char c)
 {
 	mStringContent = new char[1];
@@ -21,6 +28,7 @@ MyString::MyString(const char* str)
 	for (size_t i = 0; i < mStringLength; i++)
 		mStringContent[i] = str[i];
 }
+// Copy Constructor
 MyString::MyString(const MyString& str)
 {
 	mStringLength = str.mStringLength;
@@ -40,6 +48,10 @@ MyString::~MyString()
 
 /* Methods */
 
+const char* MyString::GetContent(void) const
+{
+	return mStringContent;
+}
 size_t MyString::GetLength(void) const
 {
 	return mStringLength;
