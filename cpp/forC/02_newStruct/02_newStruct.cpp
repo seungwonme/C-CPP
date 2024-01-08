@@ -15,7 +15,7 @@ int main()
 {
     USERDATA* pNewUser = new USERDATA;
     pNewUser->age = 10;
-    strcpy_s(pNewUser->name, sizeof(pNewUser->name), "Hoon");
+    strlcpy(pNewUser->name, "Hoon", sizeof(pNewUser->name));
 
     printUserData(pNewUser);
     return 0;
