@@ -22,7 +22,11 @@ int main(int ac, char *av[])
 	{
 		printf("%d ~ %d\n", min, max);
 		scanf("%d", &user);
-		if (answer > user)
+        if (user > max)
+        {
+            printf("%d보다 작습니다.\n", user);
+        }
+		else if (answer > user)
 		{
 			min = user + 1;
 			printf("%d보다 큽니다.\n", user);
